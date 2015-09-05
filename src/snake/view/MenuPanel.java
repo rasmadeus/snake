@@ -50,6 +50,7 @@ class MenuPanel extends JPanel {
         panelSwitcher.addActionListener(
             (ActionEvent ev) -> {
                 if (isAreaPanel) {
+                    mainView.stop();                    
                     mainView.showSettings();
                     panelSwitcher.setIcon(new ImageIcon(getClass().getResource("../../resources/snake.png")));
                 } else {
@@ -57,6 +58,8 @@ class MenuPanel extends JPanel {
                     panelSwitcher.setIcon(new ImageIcon(getClass().getResource("../../resources/settings.png")));
                 }
                 isAreaPanel = !isAreaPanel;
+                start.setEnabled(isAreaPanel);
+                stop.setEnabled(isAreaPanel);
             }
         );
         

@@ -26,4 +26,14 @@ public class Model {
     public static int cellSide() {
         return 20;
     }    
+    
+    public void setAreaLength(int length) {
+        area.setLength(length);
+    }
+    
+    public int getLength() {
+        return area.getLength();
+    }
+    
+    private Area area = new Area();
 }

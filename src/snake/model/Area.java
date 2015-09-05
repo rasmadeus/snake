@@ -12,10 +12,20 @@ package snake.model;
 class Area {
 
     public static int minimumSideLength() {
-        return 5;
+        return 15;
     }
     
     public static int maximumSideLength() {
-        return 30;
+        return 35;
     }
+    
+    public void setLength(int length) {
+        this.length = length;
+    }
+    
+    public int getLength() {
+        return length;
+    }
+    
+    private int length = minimumSideLength();
 }

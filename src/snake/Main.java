@@ -5,7 +5,6 @@
  */
 package snake;
 
-import snake.controller.Controller;
 import snake.view.MainView;
 
 /**
@@ -19,8 +18,7 @@ public class Main {
      */
     public static void main(String[] args) {
         MainView mainView = new MainView();
-        mainView.moveToCenterOfScreen();
         mainView.setVisible(true);
-    }
-    
+        mainView.updateSizeAndPosition();
+    }    
 }

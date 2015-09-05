@@ -8,8 +8,11 @@ package snake.view;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import snake.Playable;
 import snake.controller.Controller;
 import snake.model.Model;
 
@@ -17,7 +20,7 @@ import snake.model.Model;
  *
  * @author rasmadeus
  */
-public class MainView extends JDialog {
+public class MainView extends JDialog implements Playable {
     
     public MainView() {        
         setTitle("Snake");
@@ -27,9 +30,21 @@ public class MainView extends JDialog {
         contentPanel.add(settings, settings.getCardKey());
 
         add(menu, BorderLayout.PAGE_START);
-        add(contentPanel, BorderLayout.CENTER);    
+        add(contentPanel, BorderLayout.CENTER);
+        
+        setCloseEvent();
     }
 
+    @Override
+    public void start() {
+        areaPanelHeart.start();
+    }
+    
+    @Override
+    public void stop() {
+        areaPanelHeart.stop();
+    }
+    
     public void showSettings() {
         contentLayout.show(contentPanel, settings.getCardKey());
     }
@@ -45,8 +60,23 @@ public class MainView extends JDialog {
         );
     }
 
+    public void updateSizeAndPosition() {
+        controller.updateViewSizeAndPosition();
+    }
+    
     public void setAreaSize(int side) {
         setSize(side, side + menu.getHeight());
+    }
+    
+    private void setCloseEvent() {
+        this.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosed(WindowEvent ev) {
+                    stop();
+                    super.windowClosed(ev);
+                }
+            }
+        );
     }
     
     private final Model model = new Model();
@@ -57,4 +87,6 @@ public class MainView extends JDialog {
     
     private final CardLayout contentLayout = new CardLayout();
     JPanel contentPanel = new JPanel(contentLayout);
+    
+    private final Playable areaPanelHeart = new AreaPanelHeart(area);
 }

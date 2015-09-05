@@ -20,7 +20,12 @@ public class Controller {
     }
     
     public void setAreaSideLength(int value) {
-        view.setAreaSize(value * Model.cellSide());
+        model.setAreaLength(value);
+    }
+    
+    public void updateViewSizeAndPosition() {
+        view.setAreaSize(model.getLength() * Model.cellSide());
+        view.moveToCenterOfScreen();
     }
     
     public void setNumberOfPreys(int value) {
@@ -28,11 +33,11 @@ public class Controller {
     }
     
     public void start() {
-        
+        view.start();
     }
     
     public void stop() {
-        
+        view.stop();
     }
     
     private Model model;    

@@ -32,6 +32,8 @@ class SettingsPanel extends JPanel implements Cardable {
 
         controller.setAreaSideLength(areaSideLengthModel.getNumber().intValue());
         controller.setNumberOfPreys(preysModel.getNumber().intValue());
+        
+        controller.updateViewSizeAndPosition();
     }
     
     @Override
@@ -69,6 +71,7 @@ class SettingsPanel extends JPanel implements Cardable {
                 setPreysModelMaximumValue();
                 setMouseWheelListener(preys, preysModel);
                 controller.setAreaSideLength(areaSideLengthModel.getNumber().intValue());
+                controller.updateViewSizeAndPosition();
             }
         );
         
@@ -86,8 +89,8 @@ class SettingsPanel extends JPanel implements Cardable {
         spinner.addMouseWheelListener(
             (MouseWheelEvent ev) -> {
                 if (ev.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-                    final int SCROLL_FACTOR = 3;
-                    final int newValue = model.getNumber().intValue() - ev.getUnitsToScroll() / SCROLL_FACTOR;
+                    final int scrollFactor = 3;
+                    final int newValue = model.getNumber().intValue() - ev.getUnitsToScroll() / scrollFactor;
                     final int topBoundedValue = Math.max((int) model.getMinimum(), newValue);
                     final int bottomTopBoundedValue = Math.min((int) model.getMaximum(), topBoundedValue); 
                     model.setValue(bottomTopBoundedValue);
