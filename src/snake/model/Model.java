@@ -5,11 +5,13 @@
  */
 package snake.model;
 
+import snake.Playable;
+
 /**
  *
  * @author rasmadeus
  */
-public class Model {
+public class Model implements Playable{
     
     public static int minimumAreaSideLength() {
         return Area.minimumSideLength();
@@ -27,13 +29,35 @@ public class Model {
         return 20;
     }    
     
-    public void setAreaLength(int length) {
-        area.setLength(length);
+    @Override
+    public void start() {
+        
+    }
+    
+    @Override
+    public void stop() {
+        
+    }
+    
+    @Override
+    public void pause() {
+        
+    }
+    
+    public void reinit(int areaLength, int numberOfPreys) {
+        stop();
+        area.setLength(areaLength);
     }
     
     public int getLength() {
         return area.getLength();
     }
     
+    public int getWeight() {
+        return snake.getWeight();
+    }
+    
     private Area area = new Area();
+    
+    private Snake snake = new Snake();
 }

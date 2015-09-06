@@ -5,6 +5,7 @@
  */
 package snake.view;
 
+import snake.AreaPanelActivity;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Toolkit;
@@ -20,7 +21,7 @@ import snake.model.Model;
  *
  * @author rasmadeus
  */
-public class MainView extends JDialog implements Playable {
+public class MainView extends JDialog {
     
     public MainView() {        
         setTitle("Snake");
@@ -35,21 +36,17 @@ public class MainView extends JDialog implements Playable {
         setCloseEvent();
     }
 
-    @Override
-    public void start() {
-        areaPanelHeart.start();
-    }
-    
-    @Override
-    public void stop() {
-        areaPanelHeart.stop();
+    public void setAreaMode(AreaPanelActivity mode) {
+        area.setActivity(mode);
     }
     
     public void showSettings() {
+        areaPanelHeart.pause();
         contentLayout.show(contentPanel, settings.getCardKey());
     }
     
     public void showArea() {
+        areaPanelHeart.start();
         contentLayout.show(contentPanel, area.getCardKey());
     }    
     
@@ -72,7 +69,8 @@ public class MainView extends JDialog implements Playable {
         this.addWindowListener(new WindowAdapter() {
                 @Override
                 public void windowClosed(WindowEvent ev) {
-                    stop();
+                    controller.stop();
+                    areaPanelHeart.stop();
                     super.windowClosed(ev);
                 }
             }
@@ -81,12 +79,11 @@ public class MainView extends JDialog implements Playable {
     
     private final Model model = new Model();
     private final Controller controller = new Controller(model, this);
-    private final MenuPanel menu = new MenuPanel(this, controller);
-    private final AreaPanel area = new AreaPanel();
+    private final MenuPanel menu = new MenuPanel(controller);
+    private final AreaPanel area = new AreaPanel(model, controller);
+    private final Playable areaPanelHeart = new AreaPanelHeart(area);
     private final SettingsPanel settings = new SettingsPanel(controller);
     
     private final CardLayout contentLayout = new CardLayout();
     JPanel contentPanel = new JPanel(contentLayout);
-    
-    private final Playable areaPanelHeart = new AreaPanelHeart(area);
 }

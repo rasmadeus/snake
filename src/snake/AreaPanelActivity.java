@@ -9,11 +9,7 @@ package snake;
  *
  * @author rasmadeus
  */
-public interface Playable {
-    
-    public void start();
-    
-    public void stop();
-    
-    public void pause();
+public enum AreaPanelActivity {
+    GAME,
+    RESULTS
 }

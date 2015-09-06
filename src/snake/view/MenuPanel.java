@@ -18,8 +18,7 @@ import snake.controller.Controller;
  */
 class MenuPanel extends JPanel {
 
-    public MenuPanel(MainView mainView, Controller controller) {
-        this.mainView = mainView;
+    public MenuPanel(Controller controller) {
         this.controller = controller;
         
         putControlsToPanel();
@@ -37,25 +36,36 @@ class MenuPanel extends JPanel {
     private void setListeners() {
         start.addActionListener(
             (ActionEvent ev) -> {
-                controller.start();
+                if (isPause) {
+                    controller.start();
+                    start.setIcon(pauseIcon);
+                }
+                else {
+                    controller.pause();
+                    start.setIcon(startIcon);
+                }
+                isPause = !isPause;
             }
         );
         
         stop.addActionListener(
             (ActionEvent ev) -> {
                 controller.stop();
+                isPause = true;
+                start.setIcon(startIcon);
             }
         );
         
         panelSwitcher.addActionListener(
             (ActionEvent ev) -> {
                 if (isAreaPanel) {
-                    mainView.stop();                    
-                    mainView.showSettings();
-                    panelSwitcher.setIcon(new ImageIcon(getClass().getResource("../../resources/snake.png")));
+                    controller.showSettings();
+                    panelSwitcher.setIcon(areaIcon);
+                    start.setIcon(startIcon);
+                    isPause = true;
                 } else {
-                    mainView.showArea();
-                    panelSwitcher.setIcon(new ImageIcon(getClass().getResource("../../resources/settings.png")));
+                    controller.showArea();
+                    panelSwitcher.setIcon(settingsIcon);
                 }
                 isAreaPanel = !isAreaPanel;
                 start.setEnabled(isAreaPanel);
@@ -65,18 +75,25 @@ class MenuPanel extends JPanel {
         
         exit.addActionListener(
             (ActionEvent ev) -> {
-                mainView.dispose();
+                controller.exit();
             }
         );
     } 
     
     private final Controller controller;
-    private final MainView mainView;
     
-    private final JButton start = new JButton(new ImageIcon(getClass().getResource("../../resources/start.png")));
-    private final JButton stop = new JButton(new ImageIcon(getClass().getResource("../../resources/stop.png")));
-    private final JButton panelSwitcher = new JButton(new ImageIcon(getClass().getResource("../../resources/settings.png")));
-    private final JButton exit = new JButton(new ImageIcon(getClass().getResource("../../resources/exit.png")));
+    private final ImageIcon startIcon = new ImageIcon(getClass().getResource("../../resources/start.png"));
+    private final ImageIcon pauseIcon = new ImageIcon(getClass().getResource("../../resources/pause.png"));
+    private final ImageIcon stopIcon = new ImageIcon(getClass().getResource("../../resources/stop.png"));
+    private final ImageIcon settingsIcon = new ImageIcon(getClass().getResource("../../resources/settings.png"));
+    private final ImageIcon areaIcon = new ImageIcon(getClass().getResource("../../resources/snake.png"));
+    private final ImageIcon exitIcon = new ImageIcon(getClass().getResource("../../resources/exit.png"));
+    
+    private final JButton start = new JButton(startIcon);
+    private final JButton stop = new JButton(stopIcon);
+    private final JButton panelSwitcher = new JButton(settingsIcon);
+    private final JButton exit = new JButton(exitIcon);
     
     private boolean isAreaPanel = true;
+    private boolean isPause = true;
 }

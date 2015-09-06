@@ -29,9 +29,7 @@ class SettingsPanel extends JPanel implements Cardable {
         putControlsToPanel();
         setPreysModelMaximumValue();  
         setSpinnersModelsListeners();
-
-        controller.setAreaSideLength(areaSideLengthModel.getNumber().intValue());
-        controller.setNumberOfPreys(preysModel.getNumber().intValue());
+        reinitModel();
         
         controller.updateViewSizeAndPosition();
     }
@@ -70,20 +68,25 @@ class SettingsPanel extends JPanel implements Cardable {
             (ChangeEvent ev) -> {
                 setPreysModelMaximumValue();
                 setMouseWheelListener(preys, preysModel);
-                controller.setAreaSideLength(areaSideLengthModel.getNumber().intValue());
+                reinitModel();                
                 controller.updateViewSizeAndPosition();
             }
         );
         
         preysModel.addChangeListener(
             (ChangeEvent ev) -> {
-                controller.setNumberOfPreys(preysModel.getNumber().intValue());
+                reinitModel();
             }
         );
         
         setMouseWheelListener(preys, preysModel);
         setMouseWheelListener(areaSideLength, areaSideLengthModel);
     }    
+    
+    private void reinitModel() {
+        controller.stop();
+        controller.reinitModel(areaSideLengthModel.getNumber().intValue(), preysModel.getNumber().intValue());
+    }
     
     private void setMouseWheelListener(JSpinner spinner, SpinnerNumberModel model) {
         spinner.addMouseWheelListener(

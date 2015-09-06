@@ -20,5 +20,6 @@ public class Main {
         MainView mainView = new MainView();
         mainView.setVisible(true);
         mainView.updateSizeAndPosition();
+        mainView.showArea();
     }    
 }

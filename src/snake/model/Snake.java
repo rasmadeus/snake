@@ -15,4 +15,9 @@ class Snake {
         return 4;
     }
     
+    public int getWeight() {
+        return weight;
+    }
+    
+    private int weight = 0;
 }

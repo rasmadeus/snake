@@ -54,6 +54,11 @@ public abstract class HavingHeart implements Runnable, Playable{
         }
    }
    
+   @Override
+   public void pause() {
+       stop();
+   }
+    
    protected abstract void step();
     
    private final long frequency;
