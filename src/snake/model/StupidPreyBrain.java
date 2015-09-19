@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author rasmadeus
  */
-class StupidPreyBrain extends PreyBrain {
+class StupidPreyBrain extends PositionGenerator {
 
     public StupidPreyBrain(Area area) {
         super(area);
@@ -25,18 +25,6 @@ class StupidPreyBrain extends PreyBrain {
         final int x = currentPos.x + (isAddendToX ? addend : 0);
         final int y = currentPos.y + (isAddendToX ? 0 : addend);
         return new Point(bound(x), bound(y));
-    }
-    
-    private int bound(int coord) {
-        if (coord < 0) {
-            return area.getWidth() - 1;
-        }            
-        
-        if (coord > area.getWidth() - 1) {
-            return 0;
-        }
-        
-        return coord;
     }
     
     private final Random posGenerator = new Random();    

@@ -12,7 +12,7 @@ import java.util.Random;
  *
  * @author rasmadeus
  */
-class JumpPositionGenerator extends PreyBrain {
+class JumpPositionGenerator extends PositionGenerator {
 
     public JumpPositionGenerator(Area area) {
         super(area);

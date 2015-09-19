@@ -38,25 +38,11 @@ class Snake extends Creature {
     
     public int getWeight() {
         return body.size();
-    }
-
-    public void setDirection(Model.Direction direction) {
-        synchronized(directionLocker) {
-            this.lastCameDirection = direction;
-        }
-    }
+    }   
     
-    private void changeDirection() {
-        synchronized(directionLocker) {
-            switch(lastCameDirection) {
-                case UP: if (direction == Model.Direction.DOWN) return; break;
-                case RIGHT: if (direction == Model.Direction.LEFT) return; break;
-                case DOWN: if (direction == Model.Direction.UP) return; break;
-                case LEFT: if (direction == Model.Direction.RIGHT) return; break;
-            }
-            direction = lastCameDirection;
-        }
-    }    
+    public void setDirection(Model.Direction direction) {
+        pilot.setDirection(direction);
+    }
     
     @Override
     public void render(Graphics g) {
@@ -71,8 +57,7 @@ class Snake extends Creature {
 
     @Override
     protected void step() { 
-        changeDirection();
-        Point nextPos = this.nextPos();
+        Point nextPos = pilot.next(body.get(body.size() - 1));
         synchronized (renderLock) {   
             boolean eat = area.eat(nextPos, this);
             body.add(nextPos);
@@ -82,47 +67,16 @@ class Snake extends Creature {
             }
         }
     }
-
-    private Point nextPos() {
-        Point headPos = body.get(body.size() - 1);
-        int x = headPos.x;
-        int y = headPos.y;
-        
-        switch(direction) {
-            case UP: y -= 1; break;
-            case RIGHT: x += 1; break;
-            case DOWN: y += 1; break;
-            case LEFT: x -= 1; break;
-        }
-        
-        return new Point(bound(x), bound(y));
-    }
-    
-    private int bound(int value) {
-        if (value < 0) {
-            return area.getWidth() - 1;
-        }
-        
-        if (value > area.getWidth() - 1) {
-            return 0;
-        }
-        
-        return value;
-    }
     
     private final ArrayList<Point> body = new ArrayList();
     
     private final Image head = new ImageIcon(getClass().getResource("../../resources/snakeHead.png")).getImage();
 
-    private final Object renderLock = new Object();
-    
-    private final Object directionLocker = new Object();
-    
-    private Model.Direction lastCameDirection = Model.Direction.UP;
-    
-    private Model.Direction direction = Model.Direction.DOWN;
+    private final Object renderLock = new Object();  
 
     private final Habitants habitants;
+    
+    private final StraightPositionGenerator pilot = new StraightPositionGenerator(area);
     
     @Override
     public void eat(Creature creature) {

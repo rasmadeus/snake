@@ -17,12 +17,12 @@ import javax.swing.ImageIcon;
  */
 class Prey extends Creature {
 
-    public Prey(long frequency, Area area, String pathToSprite, Point pos, PreyBrain brain) {
+    public Prey(long frequency, Area area, String pathToSprite, Point pos, PositionGenerator brain) {
         super(frequency, area);
         sprite = new ImageIcon(getClass().getResource(pathToSprite)).getImage();
         this.pos = pos;
         this.brain = brain;
-        jumpBrain = PreyBrain.make(area, PreyBrain.Type.JUMP);
+        jumpBrain = PositionGenerator.make(area, PositionGenerator.Type.JUMP);
     }
 
     public static Prey make(Point pos, Area area) {
@@ -33,7 +33,7 @@ class Prey extends Creature {
         final Random random = new Random();        
         final int i = random.nextInt(numberOfPreysType);
         
-        final PreyBrain preyBrain = PreyBrain.make(area, PreyBrain.Type.STUPID_BRAIN);
+        final PositionGenerator preyBrain = PositionGenerator.make(area, PositionGenerator.Type.STUPID);
         return new Prey(frequencies[i], area, String.format("../../resources/%s", sprites[i]), pos, preyBrain);
     }    
     
@@ -78,13 +78,13 @@ class Prey extends Creature {
     
     private Point pos = new Point(0, 0);
     
-    private final PreyBrain brain;
+    private final PositionGenerator brain;
     
     private final Object renderLock = new Object();
 
     private volatile boolean isJumping = false;
     
-    private final PreyBrain jumpBrain;
+    private final PositionGenerator jumpBrain;
     
     @Override
     public void eat(Creature creature) {

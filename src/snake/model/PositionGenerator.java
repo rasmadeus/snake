@@ -11,26 +11,40 @@ import java.awt.Point;
  *
  * @author rasmadeus
  */
-abstract class PreyBrain {
+abstract class PositionGenerator {
     
     public enum Type {
-        STUPID_BRAIN,
+        STUPID,
         JUMP,
+        STRAIGHT
     }
     
-    static PreyBrain make(Area area, Type type) {
+    static PositionGenerator make(Area area, Type type) {
         switch(type) {
-            case STUPID_BRAIN: return new StupidPreyBrain(area);
+            case STUPID: return new StupidPreyBrain(area);
             case JUMP: return new JumpPositionGenerator(area);
+            case STRAIGHT: return new StraightPositionGenerator(area);
             default: return null;
         }
     }
 
-    public PreyBrain(Area area) {
+    public PositionGenerator(Area area) {
         this.area = area;
     }
     
     public abstract Point next(Point currentPos);
+    
+    protected int bound(int coord) {
+        if (coord < 0) {
+            return area.getWidth() - 1;
+        }            
+        
+        if (coord > area.getWidth() - 1) {
+            return 0;
+        }
+        
+        return coord;
+    }    
     
     protected Area area;    
 }
