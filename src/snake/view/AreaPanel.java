@@ -9,8 +9,6 @@ import snake.AreaPanelActivity;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import javax.swing.ImageIcon;
 import snake.controller.Controller;
@@ -27,7 +25,9 @@ final class AreaPanel extends Canvas implements Cardable{
         this.controller = controller;
         
         setActivity(AreaPanelActivity.RESULTS);
-        setKeysListener();
+        
+        setFocusable(true);
+        requestFocusInWindow();
     }
     
     @Override
@@ -70,30 +70,7 @@ final class AreaPanel extends Canvas implements Cardable{
             default: return null;
         }
     }
-    
-    private void setKeysListener() {
-        addKeyListener(new KeyListener() {
-                @Override
-                public void keyTyped(KeyEvent ev) {
-                }
 
-                @Override
-                public void keyPressed(KeyEvent ev) {
-                }
-
-                @Override
-                public void keyReleased(KeyEvent ev) {
-                    switch(ev.getKeyCode()) {
-                        case KeyEvent.VK_UP: controller.up(); break;
-                        case KeyEvent.VK_RIGHT: controller.right(); break;
-                        case KeyEvent.VK_DOWN: controller.down(); break;
-                        case KeyEvent.VK_LEFT: controller.left(); break;
-                    }
-                }            
-            }
-        );
-    }            
-    
     private final Image background = new ImageIcon(getClass().getResource("../../resources/gameAreaBackground.png")).getImage();
     
     private final Model model;

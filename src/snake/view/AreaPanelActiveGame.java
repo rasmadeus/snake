@@ -21,5 +21,6 @@ class AreaPanelActiveGame extends AreaPanelRender {
   
     @Override
     public void render(Graphics g) {
+        model.render(g);
     }
 }

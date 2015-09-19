@@ -5,6 +5,7 @@
  */
 package snake.controller;
 
+import java.awt.Graphics;
 import snake.AreaPanelActivity;
 import snake.Playable;
 import snake.model.Model;
@@ -29,8 +30,8 @@ public class Controller implements Playable {
     
     @Override
     public void stop() {
-        view.setAreaMode(AreaPanelActivity.RESULTS);
         model.stop();
+        view.setAreaMode(AreaPanelActivity.RESULTS);
     }
     
     @Override
@@ -45,7 +46,7 @@ public class Controller implements Playable {
     }
     
     public void updateViewSizeAndPosition() {
-        view.setAreaSize(model.getLength() * Model.cellSide());
+        view.setAreaSize(model.getLength() * Model.getCellSideLength());
         view.moveToCenterOfScreen();
     }    
     
@@ -59,19 +60,28 @@ public class Controller implements Playable {
     }
     
     public void exit() {
+        view.stop();
         view.dispose();
     }
     
-    public void up() {        
+    public void up() {
+        model.setSnakeDirection(Model.Direction.UP);
     }
     
-    public void left() {        
+    public void left() {
+        model.setSnakeDirection(Model.Direction.LEFT);
     }
     
-    public void down() {        
+    public void down() {
+        model.setSnakeDirection(Model.Direction.DOWN);
     }
     
     public void right() {        
+        model.setSnakeDirection(Model.Direction.RIGHT);
+    }
+    
+    public void render(Graphics g) {
+        model.render(g);
     }
     
     private final Model model;    

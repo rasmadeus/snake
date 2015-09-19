@@ -9,11 +9,15 @@ import snake.AreaPanelActivity;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
-import snake.Playable;
+import javax.swing.KeyStroke;
+import snake.HavingHeart;
 import snake.controller.Controller;
 import snake.model.Model;
 
@@ -34,6 +38,52 @@ public class MainView extends JDialog {
         add(contentPanel, BorderLayout.CENTER);
         
         setCloseEvent();
+        
+        contentPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("UP"), "up");
+        contentPanel.getActionMap().put(
+            "up", 
+            new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent ev) {
+                    controller.up();
+                }
+            }
+        );
+        
+        contentPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("DOWN"), "down");
+        contentPanel.getActionMap().put(
+            "down", 
+            new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent ev) {
+                    controller.down();
+                }
+            }
+        );
+                
+        contentPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("LEFT"), "left");
+        contentPanel.getActionMap().put(
+            "left", 
+            new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent ev) {
+                    controller.left();
+                }
+            }
+        );
+                
+        contentPanel.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("RIGHT"), "right");
+        contentPanel.getActionMap().put(
+            "right", 
+            new AbstractAction() {
+                @Override
+                public void actionPerformed(ActionEvent ev) {
+                    controller.right();
+                }
+            }
+        );
+        
+        
     }
 
     public void setAreaMode(AreaPanelActivity mode) {
@@ -62,26 +112,32 @@ public class MainView extends JDialog {
     }
     
     public void setAreaSize(int side) {
-        setSize(side, side + menu.getHeight());
+        area.setSize(side, side);
+        menu.setSize(side, menu.getHeight());
+        setSize(area.getWidth(), area.getHeight() + menu.getHeight() + menu.getHeight());
+    }
+    
+    public void stop() {
+        areaPanelHeart.stop();
+        controller.stop();                
+        areaPanelHeart.join();
     }
     
     private void setCloseEvent() {
         this.addWindowListener(new WindowAdapter() {
-                @Override
-                public void windowClosed(WindowEvent ev) {
-                    controller.stop();
-                    areaPanelHeart.stop();
-                    super.windowClosed(ev);
-                }
+            @Override
+            public void windowClosed(WindowEvent ev) {
+                stop();
+                super.windowClosed(ev);
             }
-        );
+        });
     }
     
     private final Model model = new Model();
     private final Controller controller = new Controller(model, this);
     private final MenuPanel menu = new MenuPanel(controller);
     private final AreaPanel area = new AreaPanel(model, controller);
-    private final Playable areaPanelHeart = new AreaPanelHeart(area);
+    private final HavingHeart areaPanelHeart = new AreaPanelHeart(area);
     private final SettingsPanel settings = new SettingsPanel(controller);
     
     private final CardLayout contentLayout = new CardLayout();

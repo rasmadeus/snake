@@ -11,7 +11,7 @@ import snake.view.MainView;
  *
  * @author rasmadeus
  */
-public class Main {
+public class Main { 
 
     /**
      * @param args the command line arguments
@@ -20,6 +20,7 @@ public class Main {
         MainView mainView = new MainView();
         mainView.setVisible(true);
         mainView.updateSizeAndPosition();
+        mainView.setResizable(false);
         mainView.showArea();
     }    
 }

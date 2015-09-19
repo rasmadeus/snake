@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Model.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/StupidBrain.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Creature.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelActiveGame.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/PreyBrain.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Area.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/Cardable.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/Playable.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/MainView.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/HavingHeart.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelResults.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/SettingsPanel.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/controller/Controller.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelRender.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanel.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/MenuPanel.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelHeart.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Prey.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/Main.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Snake.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/AreaPanelActivity.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/World.java</file>
+        </group>
+    </open-files>
+</project-private>

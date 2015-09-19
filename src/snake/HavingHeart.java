@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  *
  * @author rasmadeus
  */
-public abstract class HavingHeart implements Runnable, Playable{
+public abstract class HavingHeart implements Runnable, Playable {
 
     public HavingHeart(long frequency) {
         this.frequency = frequency;
@@ -21,8 +21,8 @@ public abstract class HavingHeart implements Runnable, Playable{
     @Override
     public void run() {
         while(isRunning) {
-            step();
-            try {             
+            step();            
+            try {     
                 Thread.sleep(frequency);
             }
             catch (InterruptedException ex) {
@@ -44,27 +44,30 @@ public abstract class HavingHeart implements Runnable, Playable{
     public void stop() {
         if (isRunning) {
             isRunning = false;
-            try {             
+        }
+    }
+   
+    @Override
+    public void pause() {
+       stop();
+    }
+   
+    public void join() {
+       if (thread != null) {
+            try {
                 thread.join();
             }
             catch (InterruptedException ex) {
-                Logger.getLogger(HavingHeart.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(HavingHeart.class.getName()).log(Level.SEVERE, null, ex);
             }
-            thread = null;
         }
-   }
+    }
    
-   @Override
-   public void pause() {
-       stop();
-   }
-    
    protected abstract void step();
     
    private final long frequency;
    
    private Thread thread = null;
    
-   private volatile boolean isRunning = false;
-   
+   private volatile boolean isRunning = false;   
 }

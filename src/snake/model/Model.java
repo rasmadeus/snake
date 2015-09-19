@@ -5,6 +5,7 @@
  */
 package snake.model;
 
+import java.awt.Graphics;
 import snake.Playable;
 
 /**
@@ -13,51 +14,74 @@ import snake.Playable;
  */
 public class Model implements Playable{
     
+    public enum Direction {
+        UP,
+        RIGHT,
+        DOWN,
+        LEFT
+    }
+    
     public static int minimumAreaSideLength() {
-        return Area.minimumSideLength();
+        return 15;
     }
     
     public static int maximumAreaSideLength() {
-        return Area.maximumSideLength();
+        return 30;
     }
     
     public static int initialSnakeLength() {
         return Snake.initialLength();
     }
     
-    public static int cellSide() {
-        return 20;
+    public static int getCellSideLength() {
+        return Cell.getSideLength();
     }    
     
     @Override
     public void start() {
-        
+        habitants.start();
+        snake.start();
     }
     
     @Override
     public void stop() {
-        
+        habitants.stop();
+        snake.stop();
+        snake.join();
     }
     
     @Override
     public void pause() {
-        
+        stop();
     }
     
-    public void reinit(int areaLength, int numberOfPreys) {
+    public void reinit(int areaSideLength, int numberOfPreys) {
         stop();
-        area.setLength(areaLength);
+        area = new Area(areaSideLength);
+        habitants = new Habitants(numberOfPreys, area);
+        snake = new Snake(area, habitants);
     }
     
     public int getLength() {
-        return area.getLength();
+        return area.getWidth();
     }
     
     public int getWeight() {
         return snake.getWeight();
     }
     
-    private Area area = new Area();
+    public void render(Graphics g) {
+        habitants.render(g);
+        snake.render(g);
+    }
+        
+    public void setSnakeDirection(Direction direction) {
+        snake.setDirection(direction);
+    }
     
-    private Snake snake = new Snake();
+    private Area area = new Area(0);
+  
+    private Habitants habitants = new Habitants(0, area);
+    
+    private Snake snake = new Snake(area, habitants);
 }

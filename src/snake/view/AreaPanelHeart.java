@@ -22,9 +22,9 @@ class AreaPanelHeart extends HavingHeart{
     protected void step() {
         areaPanel.render();
     }
-    
+   
     private static long getUpdatingFrequency() {
-        return 100;
+        return 10;
     }
     
     private final AreaPanel areaPanel;

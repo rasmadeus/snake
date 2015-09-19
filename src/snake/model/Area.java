@@ -5,27 +5,46 @@
  */
 package snake.model;
 
+import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  * @author rasmadeus
  */
 class Area {
-
-    public static int minimumSideLength() {
-        return 15;
+    Area(int width) {
+        this.width = width;
+        
+        for(int x = 0; x < width; ++x) {
+            for(int y = 0; y < width; ++y) {
+                cells.put(new Point(x, y), new Cell());
+            }
+        }                
     }
     
-    public static int maximumSideLength() {
-        return 35;
+    public boolean isTaked(Point pos) {
+        return cells.get(pos).isTaked();
     }
     
-    public void setLength(int length) {
-        this.length = length;
+    public boolean take(Point pos, Creature creature) {
+        return cells.get(pos).take(creature);
     }
     
-    public int getLength() {
-        return length;
+    public void release(Point pos) {
+        cells.get(pos).release();
     }
     
-    private int length = minimumSideLength();
+    public boolean eat(Point pos, Creature creature) {
+        return cells.get(pos).eat(creature);
+    }
+    
+    public int getWidth() {
+        return width;
+    }
+    
+    private final int width;
+    
+    private final Map<Point, Cell> cells = new HashMap();
 }
