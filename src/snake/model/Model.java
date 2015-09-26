@@ -7,6 +7,7 @@ package snake.model;
 
 import java.awt.Graphics;
 import snake.Playable;
+import snake.controller.Controller;
 
 /**
  *
@@ -19,6 +20,11 @@ public class Model implements Playable{
         RIGHT,
         DOWN,
         LEFT
+    }
+    
+    private enum State {
+        READY_RUNNING,
+        NOT_READY_RUNNING,
     }
     
     public static int minimumAreaSideLength() {
@@ -37,29 +43,48 @@ public class Model implements Playable{
         return Cell.getSideLength();
     }    
     
+    public void setController(Controller controller) {
+        this.controller = controller;
+    }
+    
     @Override
     public void start() {
-        habitants.start();
+        if (state == State.NOT_READY_RUNNING) {
+            final int numberOfPreys = preys.getNumberOfPreys();
+            final int areaSideLength = area.getWidth();
+            reinit(areaSideLength, numberOfPreys);
+        }
+
+        preys.start();
         snake.start();
     }
     
     @Override
     public void stop() {
-        habitants.stop();
+        preys.stop();
         snake.stop();
+        state = State.NOT_READY_RUNNING;
         snake.join();
+    }
+    
+    public void stopp() {
+        controller.stopp();
     }
     
     @Override
     public void pause() {
-        stop();
+        preys.stop();
+        snake.stop();
+        state = State.READY_RUNNING;
+        snake.join();
     }
     
     public void reinit(int areaSideLength, int numberOfPreys) {
         stop();
         area = new Area(areaSideLength);
-        habitants = new Habitants(numberOfPreys, area);
-        snake = new Snake(area, habitants);
+        preys = new Preys(numberOfPreys, area);
+        snake = new Snake(area, this);
+        state = State.READY_RUNNING;
     }
     
     public int getLength() {
@@ -71,7 +96,7 @@ public class Model implements Playable{
     }
     
     public void render(Graphics g) {
-        habitants.render(g);
+        preys.render(g);
         snake.render(g);
     }
         
@@ -81,7 +106,11 @@ public class Model implements Playable{
     
     private Area area = new Area(0);
   
-    private Habitants habitants = new Habitants(0, area);
+    private Preys preys = new Preys(0, area);
     
-    private Snake snake = new Snake(area, habitants);
+    private Controller controller = null;
+    
+    private Snake snake = new Snake(area, this);
+    
+    private State state = State.READY_RUNNING;
 }

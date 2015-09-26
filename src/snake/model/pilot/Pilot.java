@@ -3,32 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model;
+package snake.model.pilot;
 
 import java.awt.Point;
+import snake.model.Area;
 
 /**
  *
  * @author rasmadeus
  */
-abstract class PositionGenerator {
+public abstract class Pilot {
     
-    public enum Type {
-        STUPID,
-        JUMP,
-        STRAIGHT
-    }
-    
-    static PositionGenerator make(Area area, Type type) {
+    public static Pilot make(Area area, PilotType type) {
         switch(type) {
-            case STUPID: return new StupidPreyBrain(area);
-            case JUMP: return new JumpPositionGenerator(area);
-            case STRAIGHT: return new StraightPositionGenerator(area);
+            case RANDOM: return new RandomPilot(area);
+            case JUMP: return new JumpPilot(area);
+            case STRAIGHT: return new StraightPilot(area);
             default: return null;
         }
     }
 
-    public PositionGenerator(Area area) {
+    public Pilot(Area area) {
         this.area = area;
     }
     

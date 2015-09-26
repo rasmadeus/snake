@@ -9,7 +9,7 @@ package snake.model;
  *
  * @author rasmadeus
  */
-class Cell {
+public class Cell {
     
     static public int getSideLength() {
         return 20;

@@ -122,6 +122,10 @@ public class MainView extends JDialog {
         controller.stop();                
         areaPanelHeart.join();
     }
+
+    public void stopp() {
+        menu.stopp();
+    }
     
     private void setCloseEvent() {
         this.addWindowListener(new WindowAdapter() {

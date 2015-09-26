@@ -5,6 +5,7 @@
  */
 package snake.model;
 
+import snake.model.preys.Prey;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -16,22 +17,28 @@ import snake.Playable;
  *
  * @author rasmadeus
  */
-class Habitants implements Playable {
+class Preys implements Playable {
     
-    public Habitants(int numberOfHabitants, Area area) {
+    public Preys(int numberOfHabitants, Area area) {
         this.area = area;
         
         preys = new ArrayList(numberOfHabitants);
-        Random posGenerator = new Random();
+        final Random posGenerator = new Random();
         for(int i = 0; i < numberOfHabitants; ++i) {
             while(true) {
-                Point pos = new Point(posGenerator.nextInt(area.getWidth()), posGenerator.nextInt(area.getWidth()));
+                final int x = posGenerator.nextInt(area.getWidth());
+                final int y = posGenerator.nextInt(area.getWidth());
+                final Point pos = new Point(x, y);
                 if (!area.isTaked(pos)) {
                     preys.add(Prey.make(pos, area));
                     break;
                 }
             }
         }
+    }
+    
+    public int getNumberOfPreys() {
+        return preys.size();
     }
     
     @Override
@@ -53,13 +60,8 @@ class Habitants implements Playable {
     public void render(Graphics g) {
         preys.forEach((prey) -> {prey.render(g);});  
     }
-    
-    public void kill(Creature creature) {
-        Prey prey = (Prey) creature;
-        prey.toJumpMode();
-    }    
-    
+   
     private final Area area;
  
-    private final Collection<Creature> preys;    
+    private final Collection<Prey> preys;    
 }

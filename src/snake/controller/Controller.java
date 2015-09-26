@@ -20,6 +20,7 @@ public class Controller implements Playable {
     public Controller(Model model, MainView view) {
         this.model = model;
         this.view = view;
+        this.model.setController(this);
     }
 
     @Override
@@ -31,13 +32,17 @@ public class Controller implements Playable {
     @Override
     public void stop() {
         model.stop();
-        view.setAreaMode(AreaPanelActivity.RESULTS);
+        view.setAreaMode(AreaPanelActivity.RESULTS); 
     }
     
     @Override
     public void pause() {
-        view.setAreaMode(AreaPanelActivity.RESULTS);
         model.pause();
+    }
+    
+    public void stopp() {
+       view.setAreaMode(AreaPanelActivity.RESULTS);
+       view.stopp();
     }
     
     public void reinitModel(int areaLength, int numberOfPreys) {

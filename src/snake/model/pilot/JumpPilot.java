@@ -3,18 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model;
+package snake.model.pilot;
 
+import snake.model.pilot.Pilot;
 import java.awt.Point;
 import java.util.Random;
+import snake.model.Area;
 
 /**
  *
  * @author rasmadeus
  */
-class JumpPositionGenerator extends PositionGenerator {
+class JumpPilot extends Pilot {
 
-    public JumpPositionGenerator(Area area) {
+    public JumpPilot(Area area) {
         super(area);
     }
 

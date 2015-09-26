@@ -12,7 +12,7 @@ import snake.HavingHeart;
  *
  * @author rasmadeus
  */
-abstract class Creature extends HavingHeart {
+public abstract class Creature extends HavingHeart {
 
     public Creature(long frequency, Area area) {
         super(frequency);

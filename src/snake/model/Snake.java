@@ -5,11 +5,13 @@
  */
 package snake.model;
 
+import snake.model.pilot.StraightPilot;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Point;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
+import snake.model.preys.Prey;
 
 /**
  *
@@ -21,10 +23,10 @@ class Snake extends Creature {
         return 4;
     }
 
-    public Snake(Area area, Habitants habitants) {
+    public Snake(Area area, Model model) {
         super(200, area);
         
-        this.habitants = habitants;
+        this.model = model;
         
         final int xHead = area.getWidth() / 2;
         final int yHead = area.getWidth() / 2;
@@ -37,7 +39,7 @@ class Snake extends Creature {
     }
     
     public int getWeight() {
-        return body.size();
+        return weight;
     }   
     
     public void setDirection(Model.Direction direction) {
@@ -68,18 +70,28 @@ class Snake extends Creature {
         }
     }
     
+    @Override
+    public void eat(Creature creature) {
+        if (creature == this) {
+            model.stopp();
+            stop();
+        }
+        else {
+            Prey prey = (Prey) creature;
+            weight += prey.getWeight();
+            prey.toJumpMode();
+        }
+    }
+    
     private final ArrayList<Point> body = new ArrayList();
     
     private final Image head = new ImageIcon(getClass().getResource("../../resources/snakeHead.png")).getImage();
 
     private final Object renderLock = new Object();  
-
-    private final Habitants habitants;
     
-    private final StraightPositionGenerator pilot = new StraightPositionGenerator(area);
+    private final StraightPilot pilot = new StraightPilot(area);
     
-    @Override
-    public void eat(Creature creature) {
-        habitants.kill(creature);
-    }
+    private int weight = 0;
+    
+    private Model model;
 }

@@ -3,17 +3,19 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model;
+package snake.model.pilot;
 
 import java.awt.Point;
+import snake.model.Area;
+import snake.model.Model;
 
 /**
  *
  * @author rasmadeus
  */
-class StraightPositionGenerator extends PositionGenerator {
+public class StraightPilot extends Pilot {
 
-    public StraightPositionGenerator(Area area) {
+    public StraightPilot(Area area) {
         super(area);
     }
 

@@ -24,7 +24,12 @@ class MenuPanel extends JPanel {
         putControlsToPanel();
         setListeners();
     }
-   
+    
+    public void stopp() {
+        isPause = true;
+        start.setIcon(startIcon);
+    }
+    
     private void putControlsToPanel() {
         setLayout(new GridLayout(1, 4));
         add(start);

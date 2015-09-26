@@ -13,7 +13,7 @@ import java.util.Map;
  *
  * @author rasmadeus
  */
-class Area {
+public class Area {
     Area(int width) {
         this.width = width;
         
