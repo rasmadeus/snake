@@ -11,16 +11,14 @@ import snake.view.MainView;
  *
  * @author rasmadeus
  */
-public class Main { 
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
+public class Main {
+    
+    public static void main(String [] args) {
         MainView mainView = new MainView();
         mainView.setVisible(true);
-        mainView.updateSizeAndPosition();
-        mainView.setResizable(false);
-        mainView.showArea();
-    }    
+        mainView.reinitModel();
+        mainView.updateSize();
+        mainView.moveToCenterOfScreen();
+        mainView.startRender();
+    }
 }

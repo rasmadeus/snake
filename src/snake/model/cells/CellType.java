@@ -3,17 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake;
+package snake.model.cells;
 
 /**
  *
  * @author rasmadeus
  */
-public interface Playable {
-    
-    public void start();
-    
-    public void stop();
-    
-    public void pause();
+public enum CellType {    
+    ONE_CREATURE_CONTAINER
 }

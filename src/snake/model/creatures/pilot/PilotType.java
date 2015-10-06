@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model.preys;
+package snake.model.creatures.pilot;
 
 /**
  *
  * @author rasmadeus
  */
-public enum PreysType {
-    FOX,
-    CAT,
-    PIDGIN
+public enum PilotType {
+    ONE_STEP_RANDOM_PILOT,
+    SNAKE_PILOT,
+    JUMP_PILOT
 }

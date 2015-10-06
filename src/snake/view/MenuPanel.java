@@ -10,7 +10,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import snake.controller.Controller;
+import snake.model.Model;
+
 
 /**
  *
@@ -18,15 +19,18 @@ import snake.controller.Controller;
  */
 class MenuPanel extends JPanel {
 
-    public MenuPanel(Controller controller) {
-        this.controller = controller;
+    public MenuPanel(MainView mainView, Model model, AreaPanelHeart areaPanelHeart) {
+        this.mainView = mainView;
+        this.model = model;
+        this.areaPanelHeart = areaPanelHeart;
         
         putControlsToPanel();
         setListeners();
     }
     
-    public void stopp() {
+    public void toPauseState() {
         isPause = true;
+        mustReinit = true;
         start.setIcon(startIcon);
     }
     
@@ -42,12 +46,16 @@ class MenuPanel extends JPanel {
         start.addActionListener(
             (ActionEvent ev) -> {
                 if (isPause) {
-                    controller.start();
+                    if (mustReinit) {
+                        mainView.reinitModel();
+                        mustReinit = false;
+                    }
                     start.setIcon(pauseIcon);
+                    model.start();
                 }
                 else {
-                    controller.pause();
                     start.setIcon(startIcon);
+                    model.stop();
                 }
                 isPause = !isPause;
             }
@@ -55,22 +63,28 @@ class MenuPanel extends JPanel {
         
         stop.addActionListener(
             (ActionEvent ev) -> {
-                controller.stop();
                 isPause = true;
-                start.setIcon(startIcon);
+                mustReinit = false;
+                model.stop();
+                mainView.reinitModel();
+                start.setIcon(startIcon);                
             }
         );
         
         panelSwitcher.addActionListener(
             (ActionEvent ev) -> {
                 if (isAreaPanel) {
-                    controller.showSettings();
                     panelSwitcher.setIcon(areaIcon);
                     start.setIcon(startIcon);
                     isPause = true;
+                    model.stop();
+                    mainView.showSettings();
                 } else {
-                    controller.showArea();
                     panelSwitcher.setIcon(settingsIcon);
+                    mustReinit = false;
+                    mainView.reinitModel();
+                    mainView.showArea();
+                    mainView.updateSize();
                 }
                 isAreaPanel = !isAreaPanel;
                 start.setEnabled(isAreaPanel);
@@ -80,12 +94,13 @@ class MenuPanel extends JPanel {
         
         exit.addActionListener(
             (ActionEvent ev) -> {
-                controller.exit();
+                model.stop();
+                areaPanelHeart.stop();
+                areaPanelHeart.join();
+                mainView.dispose();
             }
         );
     } 
-    
-    private final Controller controller;
     
     private final ImageIcon startIcon = new ImageIcon(getClass().getResource("../../resources/start.png"));
     private final ImageIcon pauseIcon = new ImageIcon(getClass().getResource("../../resources/pause.png"));
@@ -100,5 +115,10 @@ class MenuPanel extends JPanel {
     private final JButton exit = new JButton(exitIcon);
     
     private boolean isAreaPanel = true;
-    private boolean isPause = true;
+    private volatile boolean isPause = true;
+    private volatile boolean mustReinit = false;
+    
+    private final MainView mainView;
+    private final Model model;
+    private final AreaPanelHeart areaPanelHeart;
 }

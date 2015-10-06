@@ -3,13 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake;
+package snake.model;
 
 /**
  *
  * @author rasmadeus
  */
-public enum AreaPanelActivity {
-    GAME,
-    RESULTS
+public enum Direction {
+    UP,
+    RIGHT,
+    DOWN,
+    LEFT
 }

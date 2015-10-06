@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model.pilot;
+package snake.model.creatures.pilot;
 
-import snake.model.pilot.Pilot;
 import java.awt.Point;
 import java.util.Random;
 import snake.model.Area;
@@ -21,11 +20,11 @@ class JumpPilot extends Pilot {
     }
 
     @Override
-    public Point next(Point currentPos) {
-        final int x = random.nextInt(area.getWidth());
-        final int y = random.nextInt(area.getWidth());
+    public Point next(Point from) {
+        final int x = posGenerator.nextInt(area.getSideWidth());
+        final int y = posGenerator.nextInt(area.getSideHeight());
         return new Point(x, y);
     }
-    
-    private final Random random = new Random();
+ 
+    private final Random posGenerator = new Random();
 }

@@ -5,7 +5,6 @@
  */
 package snake.view;
 
-import snake.AreaPanelActivity;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Toolkit;
@@ -17,8 +16,7 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import snake.HavingHeart;
-import snake.controller.Controller;
+import snake.model.Direction;
 import snake.model.Model;
 
 /**
@@ -45,7 +43,7 @@ public class MainView extends JDialog {
             new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent ev) {
-                    controller.up();
+                    model.setSnakeDirection(Direction.UP);
                 }
             }
         );
@@ -56,7 +54,7 @@ public class MainView extends JDialog {
             new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent ev) {
-                    controller.down();
+                    model.setSnakeDirection(Direction.DOWN);
                 }
             }
         );
@@ -67,7 +65,7 @@ public class MainView extends JDialog {
             new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent ev) {
-                    controller.left();
+                    model.setSnakeDirection(Direction.LEFT);
                 }
             }
         );
@@ -78,25 +76,17 @@ public class MainView extends JDialog {
             new AbstractAction() {
                 @Override
                 public void actionPerformed(ActionEvent ev) {
-                    controller.right();
+                    model.setSnakeDirection(Direction.RIGHT);
                 }
             }
         );
-        
-        
-    }
-
-    public void setAreaMode(AreaPanelActivity mode) {
-        area.setActivity(mode);
     }
     
     public void showSettings() {
-        areaPanelHeart.pause();
         contentLayout.show(contentPanel, settings.getCardKey());
     }
     
     public void showArea() {
-        areaPanelHeart.start();
         contentLayout.show(contentPanel, area.getCardKey());
     }    
     
@@ -106,43 +96,46 @@ public class MainView extends JDialog {
             (int) (Toolkit.getDefaultToolkit().getScreenSize().getHeight() - getHeight()) / 2
         );
     }
-
-    public void updateSizeAndPosition() {
-        controller.updateViewSizeAndPosition();
+    
+    public void reinitModel() {
+        final int areaWidth = settings.getAreaSideWidth();
+        final int areaHeight = settings.getAreaSideHeight();
+        final int numberOfPreys = settings.getNumberOfPreys();
+        final int snakeLength = settings.getSnakeLength();
+        model.reinit(areaWidth, areaHeight, numberOfPreys, snakeLength);
+    }    
+    
+    public void updateSize() {
+        final int width = settings.getAreaSideWidth() * Model.getCellSideInPixel();
+        final int height = settings.getAreaSideHeight() * Model.getCellSideInPixel();
+        setSize(width, height + menu.getHeight() + menu.getHeight());
     }
     
-    public void setAreaSize(int side) {
-        area.setSize(side, side);
-        menu.setSize(side, menu.getHeight());
-        setSize(area.getWidth(), area.getHeight() + menu.getHeight() + menu.getHeight());
+    public void startRender() {
+        areaHeart.start();
     }
     
-    public void stop() {
-        areaPanelHeart.stop();
-        controller.stop();                
-        areaPanelHeart.join();
-    }
-
-    public void stopp() {
-        menu.stopp();
+    public void toPauseState() {
+        menu.toPauseState();
     }
     
     private void setCloseEvent() {
         this.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosed(WindowEvent ev) {
-                stop();
+                model.stop();
+                areaHeart.stop();
+                areaHeart.join();
                 super.windowClosed(ev);
             }
         });
     }
     
-    private final Model model = new Model();
-    private final Controller controller = new Controller(model, this);
-    private final MenuPanel menu = new MenuPanel(controller);
-    private final AreaPanel area = new AreaPanel(model, controller);
-    private final HavingHeart areaPanelHeart = new AreaPanelHeart(area);
-    private final SettingsPanel settings = new SettingsPanel(controller);
+    private final Model model = new Model(this);
+    private final AreaPanel area = new AreaPanel(model);
+    private final AreaPanelHeart areaHeart = new AreaPanelHeart(area);
+    private final MenuPanel menu = new MenuPanel(this, model, areaHeart);
+    private final SettingsPanel settings = new SettingsPanel(model);
     
     private final CardLayout contentLayout = new CardLayout();
     JPanel contentPanel = new JPanel(contentLayout);

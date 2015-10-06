@@ -13,7 +13,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import snake.controller.Controller;
 import snake.model.Model;
 
 
@@ -23,20 +22,40 @@ import snake.model.Model;
  */
 class SettingsPanel extends JPanel implements Cardable {
     
-    public SettingsPanel(Controller controller) {
-        this.controller = controller;
+    public SettingsPanel(Model model) {
+        this.model = model;
+        areaWidthModel = new SpinnerNumberModel(model.getAreaWidth(), Model.getAreaMinSide(), Model.getAreaMaxSide(), 1);
+        areaWidth = new JSpinner(areaWidthModel);
+        areaHeightModel = new SpinnerNumberModel(model.getAreaHeight(), Model.getAreaMinSide(), Model.getAreaMaxSide(), 1);
+        areaHeight = new JSpinner(areaHeightModel);
+        preysModel = new SpinnerNumberModel(0, 0, 0, 1);
+        snakeLengthModel = new SpinnerNumberModel(1, 1, 1, 1);
         
         putControlsToPanel();
-        setPreysModelMaximumValue();  
+        setSnakeLengthModelMaximumValue();
+        setPreysModelMaximumValue();        
         setSpinnersModelsListeners();
-        reinitModel();
-        
-        controller.updateViewSizeAndPosition();
     }
     
     @Override
     public String getCardKey() {
         return "SettingsPanel";
+    }
+    
+    public int getNumberOfPreys() {
+        return preysModel.getNumber().intValue();
+    }
+    
+    public int getAreaSideWidth() {
+        return areaWidthModel.getNumber().intValue();
+    }
+    
+    public int getAreaSideHeight() {
+        return areaHeightModel.getNumber().intValue();
+    }
+    
+    public int getSnakeLength() {
+        return snakeLengthModel.getNumber().intValue();
     }
     
     private void putControlsToPanel() {
@@ -46,47 +65,83 @@ class SettingsPanel extends JPanel implements Cardable {
         layout.setAutoCreateContainerGaps(true);
         
         GroupLayout.SequentialGroup hGroup = layout.createSequentialGroup();
-        hGroup.addGroup(layout.createParallelGroup().addComponent(areaSideLengthComment).addComponent(preysComment));
-        hGroup.addGroup(layout.createParallelGroup().addComponent(areaSideLength).addComponent(preys));
+        hGroup.addGroup(layout.createParallelGroup()
+            .addComponent(areaWidthComment)
+            .addComponent(areaHeightComment)
+            .addComponent(preysComment)
+            .addComponent(snakeLengthComment)
+        );
+        hGroup.addGroup(layout.createParallelGroup()
+            .addComponent(areaWidth)
+            .addComponent(areaHeight)
+            .addComponent(preys)
+            .addComponent(snakeLength)
+        );
         layout.setHorizontalGroup(hGroup);
         
         GroupLayout.SequentialGroup vGroup = layout.createSequentialGroup();
-        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(areaSideLengthComment).addComponent(areaSideLength));
-        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE).addComponent(preysComment).addComponent(preys));
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+            .addComponent(areaWidthComment)
+            .addComponent(areaWidth)
+        );
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+            .addComponent(areaHeightComment)
+            .addComponent(areaHeight)
+        );
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+            .addComponent(preysComment)
+            .addComponent(preys)                
+        );
+        vGroup.addGroup(layout.createParallelGroup(Alignment.BASELINE)
+            .addComponent(snakeLengthComment)
+            .addComponent(snakeLength)                
+        );
         layout.setVerticalGroup(vGroup);  
     }
     
     private void setPreysModelMaximumValue() {
-        final int currentValue = preysModel.getNumber().intValue();
-        final int maximumValue = (int) (Math.pow(areaSideLengthModel.getNumber().intValue(), 2) - Model.initialSnakeLength());
-        preysModel = new SpinnerNumberModel(Math.min(currentValue, maximumValue), 0, maximumValue, 1);
+        final int currentValue = getNumberOfPreys();
+        final int maxPreys = getAreaSideWidth() * getAreaSideHeight() - getSnakeLength();
+        preysModel = new SpinnerNumberModel(Math.min(currentValue, maxPreys), 0, maxPreys, 1);
         preys.setModel(preysModel);
-    }    
+        setMouseWheelListener(preys, preysModel);    }    
+    
+    private void setSnakeLengthModelMaximumValue() {
+        final int currentValue = getSnakeLength();
+        final int maxLength = getAreaSideWidth();
+        snakeLengthModel = new SpinnerNumberModel(Math.min(currentValue, maxLength), 1, maxLength, 1);
+        snakeLength.setModel(snakeLengthModel);
+        setMouseWheelListener(snakeLength, snakeLengthModel);
+    }
     
     private void setSpinnersModelsListeners() {
-        areaSideLengthModel.addChangeListener(
+        areaWidthModel.addChangeListener(
             (ChangeEvent ev) -> {
-                setPreysModelMaximumValue();
-                setMouseWheelListener(preys, preysModel);
-                reinitModel();                
-                controller.updateViewSizeAndPosition();
+                setSnakeLengthModelMaximumValue(); 
+                setPreysModelMaximumValue();          
+                setMouseWheelListener(preys, preysModel);            
             }
         );
         
-        preysModel.addChangeListener(
+        areaHeightModel.addChangeListener(
             (ChangeEvent ev) -> {
-                reinitModel();
+                setPreysModelMaximumValue();          
+                setMouseWheelListener(preys, preysModel);            
+            }
+        );
+        
+        snakeLengthModel.addChangeListener(
+            (ChangeEvent ev) -> {                
+                setPreysModelMaximumValue();          
+                setMouseWheelListener(preys, preysModel);            
             }
         );
         
         setMouseWheelListener(preys, preysModel);
-        setMouseWheelListener(areaSideLength, areaSideLengthModel);
+        setMouseWheelListener(areaWidth, areaWidthModel);
+        setMouseWheelListener(areaHeight, areaHeightModel);
+        setMouseWheelListener(snakeLength, snakeLengthModel);
     }    
-    
-    private void reinitModel() {
-        controller.stop();
-        controller.reinitModel(areaSideLengthModel.getNumber().intValue(), preysModel.getNumber().intValue());
-    }
     
     private void setMouseWheelListener(JSpinner spinner, SpinnerNumberModel model) {
         spinner.addMouseWheelListener(
@@ -101,14 +156,22 @@ class SettingsPanel extends JPanel implements Cardable {
             }
         );
     }
+
+    private final JLabel areaWidthComment = new JLabel("Area width:", JLabel.TRAILING);
+    private final SpinnerNumberModel areaWidthModel;
+    private final JSpinner areaWidth;
     
-    private final Controller controller;
-    
-    private final JLabel areaSideLengthComment = new JLabel("Length of side of area:", JLabel.TRAILING);
-    private final SpinnerNumberModel areaSideLengthModel = new SpinnerNumberModel(Model.minimumAreaSideLength(), Model.minimumAreaSideLength(), Model.maximumAreaSideLength(), 1);
-    private final JSpinner areaSideLength = new JSpinner(areaSideLengthModel);
+    private final JLabel areaHeightComment = new JLabel("Area height:", JLabel.TRAILING);
+    private final SpinnerNumberModel areaHeightModel;
+    private final JSpinner areaHeight;
     
     private final JLabel preysComment = new JLabel("Number of preys:", JLabel.TRAILING);
-    private SpinnerNumberModel preysModel = new SpinnerNumberModel(0, 0, 0, 1);
+    private SpinnerNumberModel preysModel;
     private final JSpinner preys = new JSpinner();
+    
+    private final JLabel snakeLengthComment = new JLabel("Snake length:", JLabel.TRAILING);
+    private SpinnerNumberModel snakeLengthModel;
+    private final JSpinner snakeLength = new JSpinner();
+    
+    private final Model model;
 }

@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model.pilot;
+package snake.model;
+
+import java.awt.Graphics;
 
 /**
  *
  * @author rasmadeus
  */
-public enum PilotType {
-    RANDOM,
-    JUMP,
-    STRAIGHT
+public interface Renderable {
+
+    public void render(Graphics g);    
 }

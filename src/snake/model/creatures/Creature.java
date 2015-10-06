@@ -3,25 +3,23 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model;
+package snake.model.creatures;
 
-import java.awt.Graphics;
-import snake.HavingHeart;
+import snake.model.Area;
+import snake.model.Renderable;
+import snake.model.Stepable;
 
 /**
  *
  * @author rasmadeus
  */
-public abstract class Creature extends HavingHeart {
-
-    public Creature(long frequency, Area area) {
-        super(frequency);
+public abstract class Creature extends Stepable implements Renderable {
+    
+    public Creature(Area area) {
         this.area = area;
     }
     
-    public abstract void render(Graphics g);
-
     public abstract void eat(Creature creature);
     
-    protected Area area;
+    protected final Area area;
 }

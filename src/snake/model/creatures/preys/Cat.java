@@ -3,12 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package snake.model.preys;
+package snake.model.creatures.preys;
 
-import snake.model.preys.Prey;
-import java.awt.Image;
 import java.awt.Point;
-import javax.swing.ImageIcon;
 import snake.model.Area;
 
 /**
@@ -16,20 +13,19 @@ import snake.model.Area;
  * @author rasmadeus
  */
 class Cat extends Prey {
-    
+
     public Cat(Area area, Point pos) {
-        super(500, area, pos);
+        super(area, pos, "cat.png");
     }
 
     @Override
-    public int getWeight() {
-        return 2;
+    public int weight() {
+        return 5;
     }
 
     @Override
-    protected Image getImage() {
-        return sprite;
+    public long frequency() {
+        return 500;
     }
     
-    private final Image sprite = new ImageIcon(getClass().getResource("../../../resources/cat.png")).getImage();
 }

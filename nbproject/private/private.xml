@@ -3,36 +3,36 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/preys/Pidgin.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/cells/OneCreatureContainer.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Model.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Creature.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/preys/Cat.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/Preys.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/pilot/SnakePilot.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Area.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/cells/EmptyRenderCell.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/Cardable.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/preys/PreysType.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/.gitignore</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/preys/Prey.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/Snake.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/pilot/OneStepRandomPilot.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/preys/Pidgin.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/SettingsPanel.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/controller/Controller.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/pilot/PilotType.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/preys/Cat.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelRender.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanel.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Snake.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/preys/Fox.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/pilot/JumpPilot.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/pilot/Pilot.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelActiveGame.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/pilot/StraightPilot.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/Playable.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Direction.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/pilot/PilotType.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/preys/Fox.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/Creature.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/pilot/Pilot.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Heart.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/MainView.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/HavingHeart.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelResults.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Preys.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/cells/CellType.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/preys/PreyType.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/MenuPanel.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/view/AreaPanelHeart.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Renderable.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/cells/Cell.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Stepable.java</file>
             <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/Main.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/preys/Prey.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/AreaPanelActivity.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/Cell.java</file>
-            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/pilot/RandomPilot.java</file>
+            <file>file:/home/rasmadeus/NetBeansProjects/lsnake/src/snake/model/creatures/pilot/JumpPilot.java</file>
         </group>
     </open-files>
 </project-private>

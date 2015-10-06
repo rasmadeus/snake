@@ -5,27 +5,28 @@
  */
 package snake.view;
 
-import snake.HavingHeart;
+import snake.model.Stepable;
 
 /**
  *
  * @author rasmadeus
  */
-class AreaPanelHeart extends HavingHeart{
+class AreaPanelHeart extends Stepable {
 
     public AreaPanelHeart(AreaPanel areaPanel) {
-        super(getUpdatingFrequency());
         this.areaPanel = areaPanel;
     }
-
+    
     @Override
     protected void step() {
         areaPanel.render();
+        rest();
     }
-   
-    private static long getUpdatingFrequency() {
-        return 10;
-    }
+
+    @Override
+    protected long frequency() {
+        return 100;
+    }    
     
     private final AreaPanel areaPanel;
 }
