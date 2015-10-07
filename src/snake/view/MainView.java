@@ -25,7 +25,8 @@ import snake.model.Model;
  */
 public class MainView extends JDialog {
     
-    public MainView() {        
+    public MainView() {
+        setResizable(false);
         setTitle("Snake");
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         

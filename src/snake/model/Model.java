@@ -46,18 +46,15 @@ public class Model implements Renderable {
         preys.render(g);
         snake.render(g);
         
-        if(isStopped) {
-            g.setColor(new Color(255, 255, 255, 200));            
-            final int width = area.getSideWidth() * Cell.getCellSideInPixel();
-            final int height = area.getSideHeight() * Cell.getCellSideInPixel();
-            g.drawRect(0, 0, width, height);
-                  
+        if(isStopped) {               
             final String textScore = String.format("Your score: %d", snake.getScore());
             final FontMetrics fontMetricsScore = g.getFontMetrics(fontScore);
             final int xScore = fontMetricsScore.stringWidth(textScore);
             final int yScore = fontMetricsScore.getHeight();
             g.setColor(Color.red);
             g.setFont(fontScore);
+            final int width = area.getSideWidth() * Cell.getCellSideInPixel();
+            final int height = area.getSideHeight() * Cell.getCellSideInPixel();             
             g.drawString(textScore, (width - xScore) / 2, (height - yScore) / 2);
         }
     }

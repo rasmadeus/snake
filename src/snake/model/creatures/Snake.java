@@ -102,7 +102,7 @@ public class Snake extends Creature {
         }
     }
     
-    private Model model;
+    private final Model model;
     
     private ArrayList<Point> body;
     
